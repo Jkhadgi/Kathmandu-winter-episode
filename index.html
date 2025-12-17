@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kathmandu PM2.5 Story Mode</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">🏔️</div>
+      <div>
+        <h1>Kathmandu PM2.5: Story Mode</h1>
+        <p class="sub">A simplified but honest PM2.5 life-cycle game (winter inversion episode).</p>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><span class="label">Day</span><span id="day" class="value">1</span></div>
+      <div class="stat"><span class="label">PM2.5</span><span id="pm" class="value">0</span><span class="unit">µg/m³</span></div>
+      <button id="next" class="btn primary">Next day</button>
+      <button id="restart" class="btn">Restart</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="grid">
+      <div class="card">
+        <h2>Story</h2>
+        <div id="story" class="story"></div>
+        <div class="choices">
+          <button class="chip" data-action="kiln_ban">Enforce kiln ban</button>
+          <button class="chip" data-action="odd_even">Odd-even traffic</button>
+          <button class="chip" data-action="burning_crackdown">Stop open burning</button>
+          <button class="chip" data-action="road_sweep">Road sweeping</button>
+          <button class="chip" data-action="public_alert">Public health alert</button>
+        </div>
+        <p class="note">Tip: actions stack but have tradeoffs. You can’t “solve” inversion. You can only reduce emissions and survive it.</p>
+      </div>
+
+      <div class="card">
+        <h2>Controls</h2>
+
+        <div class="row">
+          <label>Traffic intensity</label>
+          <input id="traffic" type="range" min="0" max="100" value="60" />
+          <span id="trafficVal" class="val">60</span>
+        </div>
+
+        <div class="row">
+          <label>Brick kilns</label>
+          <input id="kilns" type="range" min="0" max="100" value="70" />
+          <span id="kilnsVal" class="val">70</span>
+        </div>
+
+        <div class="row">
+          <label>Biomass burning</label>
+          <input id="burning" type="range" min="0" max="100" value="55" />
+          <span id="burningVal" class="val">55</span>
+        </div>
+
+        <div class="row">
+          <label>Road dust</label>
+          <input id="dust" type="range" min="0" max="100" value="50" />
+          <span id="dustVal" class="val">50</span>
+        </div>
+
+        <hr class="hr" />
+
+        <div class="env">
+          <div class="envItem"><span class="k">Mixing height</span><span id="mh" class="v"></span></div>
+          <div class="envItem"><span class="k">Wind</span><span id="wind" class="v"></span></div>
+          <div class="envItem"><span class="k">Humidity</span><span id="rh" class="v"></span></div>
+          <div class="envItem"><span class="k">Rain</span><span id="rain" class="v"></span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>PM2.5 composition</h2>
+        <div class="bars">
+          <div class="barRow"><span>Primary</span><div class="bar"><div id="b_primary" class="fill"></div></div><span id="t_primary" class="num"></span></div>
+          <div class="barRow"><span>Sulfate</span><div class="bar"><div id="b_sulf" class="fill"></div></div><span id="t_sulf" class="num"></span></div>
+          <div class="barRow"><span>Nitrate</span><div class="bar"><div id="b_nit" class="fill"></div></div><span id="t_nit" class="num"></span></div>
+          <div class="barRow"><span>SOA</span><div class="bar"><div id="b_soa" class="fill"></div></div><span id="t_soa" class="num"></span></div>
+        </div>
+        <p id="insight" class="insight"></p>
+      </div>
+
+      <div class="card wide">
+        <h2>PM2.5 timeline</h2>
+        <canvas id="plot" width="900" height="260"></canvas>
+        <p class="small">This is a stylized model: correct directions, simplified rates. Use it for understanding, not forecasting.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
